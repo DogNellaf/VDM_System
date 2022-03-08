@@ -12,6 +12,9 @@ public class VirtualDoubleApplication : MonoBehaviour
     // The controller of current scene
     public Element Controller;
 
+    // Is this on, log will be show waring, info and errors
+    public bool IsDebug = true;
+
     // Start is called before the first frame update
     void Start()
     {
