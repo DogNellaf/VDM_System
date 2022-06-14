@@ -12,4 +12,10 @@ public class MenuModel : Element
 
     // Name of workspace scene
     public string MainSceneName = "Workspace";
+
+    // Background model rotation speed
+    public float RotationSpeed;
+
+    // Background model
+    public GameObject FactoryModel;
 }

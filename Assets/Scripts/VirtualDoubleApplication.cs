@@ -19,8 +19,8 @@ public class VirtualDoubleApplication : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        
+        Controller.FixedUpdate();
     }
 }

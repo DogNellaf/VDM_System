@@ -9,6 +9,12 @@ public class Element : MonoBehaviour
         
     }
 
+    // Function called with every frame update
+    public virtual void FixedUpdate()
+    {
+
+    }
+
     // Get current application and all of instances
     public VirtualDoubleApplication application
     {

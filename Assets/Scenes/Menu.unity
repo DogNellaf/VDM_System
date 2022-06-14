@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.25897893, g: 0.18340275, b: 0.094397314, a: 1}
+  m_IndirectSpecularColor: {r: 0.25897878, g: 0.18340266, b: 0.09439721, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1111,14 +1111,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1004832591}
-  m_LocalRotation: {x: 0.645506, y: -0.22971103, z: 0.19743066, w: 0.70112485}
+  m_LocalRotation: {x: 0.7396287, y: -0.1989293, z: 0.2284144, w: 0.601002}
   m_LocalPosition: {x: 0, y: 20.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1973004836}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 84.788, y: -47.729, z: -12.532}
+  m_LocalEulerAnglesHint: {x: 101.50299, y: -389.688, z: -354.327}
 --- !u!108 &1004832593
 Light:
   m_ObjectHideFlags: 0
@@ -1137,7 +1137,7 @@ Light:
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -1170,7 +1170,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -1225,9 +1225,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba988ef0be6ec6c40a71ca3ab94b8634, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Version: Version 0.0.1
+  Version: Version 0.0.2b1
   VersionTextArea: {fileID: 739739436}
   MainSceneName: Workspace
+  RotationSpeed: 720
+  FactoryModel: {fileID: 7462155987715573622}
 --- !u!1 &1097950922
 GameObject:
   m_ObjectHideFlags: 0
