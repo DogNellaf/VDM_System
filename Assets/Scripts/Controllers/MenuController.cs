@@ -7,7 +7,6 @@ public class MenuController : Element
     // Var for refactor code
     private MenuModel model;
 
-
     // Start of menu
     public override void Start()
     {
