@@ -6,12 +6,6 @@ public class WorkspaceView : Element
     // Model for refactoring
     private WorkspaceModel model => application.Model as WorkspaceModel;
 
-    // Mouse movement offest
-    private Vector3 offset;
-
-    // Camera var for refactor
-    //private new Camera camera;
-
     // Check mouse middle push
     private bool isMiddleMouseDown => Input.GetMouseButton(2);
 
@@ -40,8 +34,6 @@ public class WorkspaceView : Element
         get
         {
             return true;
-            //Vector3 screenPoint = Camera.main.WorldToViewportPoint(model.Ground.transform.position);
-            //return screenPoint.z > 0 && screenPoint.x > 0 && screenPoint.x < 1 && screenPoint.y > 0 && screenPoint.y < 1;
         }
     }
 
@@ -104,6 +96,12 @@ public class WorkspaceView : Element
         cameraPosition = cameraStartPosition;
     }
 
+    // Find the world position per click
+    public void SearchPosition(Vector3 position)
+    {
+        Debug.Log(application.Camera.ScreenToWorldPoint(position));
+    }
+
     // User mouse drag handler
     public override void OnMouseDrag()
     {
@@ -126,19 +124,6 @@ public class WorkspaceView : Element
 
     #region Utils
 
-    // Little function for camera movement
-    //private void MoveCamera(Vector3 direction)
-    //{
-    //    direction *= model.UserMovementSpeed;
-
-    //    var convertedDirection = camera.ScreenToWorldPoint(direction);
-    //    camera.transform.position = convertedDirection + offset;
-    //}
-
-    private void ChangeCameraY(float y)
-    {
-        cameraPosition += new Vector3(0, y, 0);
-    }
 
     #endregion
 }

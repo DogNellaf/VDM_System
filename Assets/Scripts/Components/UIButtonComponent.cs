@@ -13,6 +13,9 @@ public class UIButtonComponent : Element, IPointerEnterHandler, IPointerExitHand
     // Button message
     [SerializeField] private string Text;
 
+    // Big Panel is open
+    [SerializeField] private bool isBigPanelOpen = false;
+
     // When Scene starts
     public override void Start()
     {
@@ -20,8 +23,22 @@ public class UIButtonComponent : Element, IPointerEnterHandler, IPointerExitHand
     }
 
     // When user pointing the mouse
-    public void OnPointerEnter(PointerEventData eventData) => Panel.SetActive(true);
-
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (!isBigPanelOpen)
+        {
+            Panel.SetActive(true);
+        }
+    }
     // When mouse pointing exits button
     public void OnPointerExit(PointerEventData eventData) => Panel.SetActive(false);
+
+
+    // Change active status to the another position
+    public void ChangePanelActive(GameObject panel)
+    {
+        OnPointerExit(null);
+        isBigPanelOpen = !panel.activeSelf;
+        panel.SetActive(isBigPanelOpen);
+    }
 }
