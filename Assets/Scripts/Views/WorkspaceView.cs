@@ -17,6 +17,9 @@ public class WorkspaceView : Element
     // Value of mouse scroll whell
     private float mouseWhellScroll => Input.GetAxis("Mouse ScrollWheel");
 
+    // Start position of camera
+    private Vector3 cameraStartPosition;
+
     // Camera position
     private Vector3 cameraPosition 
     { 
@@ -46,6 +49,7 @@ public class WorkspaceView : Element
     {
         //model = application.Model as WorkspaceModel;
         //camera = application.Camera;
+        cameraStartPosition = cameraPosition;
     }
 
     // Update is called once per frame
@@ -61,6 +65,8 @@ public class WorkspaceView : Element
             HeightIncrease();
         }
     }
+
+    //TODO: Make camera movement more smooth
 
     private void HeightIncrease()
     {
@@ -83,6 +89,11 @@ public class WorkspaceView : Element
                 cameraPosition = new Vector3(cameraPosition.x, model.MaxCameraHeight, cameraPosition.z);
             }
         }
+    }
+
+    public void CenterCamera()
+    {
+        cameraPosition = cameraStartPosition;
     }
 
     // User mouse drag handler
