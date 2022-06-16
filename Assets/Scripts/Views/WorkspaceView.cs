@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class WorkspaceView : Element
 {
@@ -91,6 +92,13 @@ public class WorkspaceView : Element
         }
     }
 
+    // Go to the menu without saving
+    public void BackToMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    // Move camera to the start position
     public void CenterCamera()
     {
         cameraPosition = cameraStartPosition;
