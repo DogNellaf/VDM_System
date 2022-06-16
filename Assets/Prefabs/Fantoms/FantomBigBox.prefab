@@ -11,8 +11,10 @@ GameObject:
   - component: {fileID: 101203676945514830}
   - component: {fileID: 3840018153966499078}
   - component: {fileID: 2288906327026771483}
+  - component: {fileID: 3658616855161654004}
+  - component: {fileID: 6412689440666665395}
   m_Layer: 0
-  m_Name: BigBox
+  m_Name: FantomBigBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -61,8 +63,8 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 4218315251724804968, guid: 5819f870716948f49b27fc80f2aa7a37, type: 3}
-  - {fileID: -5410646710220745704, guid: 5819f870716948f49b27fc80f2aa7a37, type: 3}
+  - {fileID: 2100000, guid: ab6f5e5a2c500344fb06322ff839240b, type: 2}
+  - {fileID: 2100000, guid: ab6f5e5a2c500344fb06322ff839240b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -84,3 +86,30 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &3658616855161654004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3537904826403750969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eafc4c47ca7bb7b49925dab18fe947e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orignal: {fileID: 3537904826403750969, guid: 2ce8ae8351b7c0b4c8f63063fcd73341, type: 3}
+  isThisPlaceBusy: 0
+--- !u!65 &6412689440666665395
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3537904826403750969}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.005086734, y: 0.005086733, z: 0.005086733}
+  m_Center: {x: 0.0000000027939677, y: 0.0000000013969836, z: -1.164153e-10}

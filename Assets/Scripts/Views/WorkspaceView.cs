@@ -102,6 +102,28 @@ public class WorkspaceView : Element
         Debug.Log(application.Camera.ScreenToWorldPoint(position));
     }
 
+    // Make object create stage
+    public void CreateObject(GameObject prefab)
+    {
+        DeactivateCanvas();
+        var item = Instantiate(prefab);
+        item.transform.parent = model.DigitalTwin.transform;
+        //item.transform.position += new Vector3(0, y, 0);
+        //item.transform.rotation = rotation;
+    }
+
+    // Deactivate canvas
+    public void DeactivateCanvas()
+    {
+        model.Canvas.SetActive(false);
+    }
+
+    // Activate canvas
+    public void ActivateCanvas()
+    {
+        model.Canvas.SetActive(true);
+    }
+
     // User mouse drag handler
     public override void OnMouseDrag()
     {
