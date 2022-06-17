@@ -623,6 +623,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UI: {fileID: 8493340953244699449}
   NameField: {fileID: 1095173057023174025}
+  nameUnsaved: 
   OutputField: {fileID: 8292519448604586158}
   InputField: {fileID: 8314826284562758994}
   MaxPowerField: {fileID: 3533454411004586868}
@@ -3077,7 +3078,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &918598235026107363
 Transform:
   m_ObjectHideFlags: 0
