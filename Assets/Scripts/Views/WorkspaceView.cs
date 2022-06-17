@@ -44,6 +44,11 @@ public class WorkspaceView : Element
         //model = application.Model as WorkspaceModel;
         //camera = application.Camera;
         cameraStartPosition = cameraPosition;
+        var twinPath = PlayerPrefs.GetString("LoadedDigitalTwin");
+        if (!string.IsNullOrEmpty(twinPath))
+        {
+            GetComponent<JsonSaveComponent>().Load(twinPath);
+        }
     }
 
     // Update is called once per frame

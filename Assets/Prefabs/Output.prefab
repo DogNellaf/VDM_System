@@ -2894,14 +2894,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4801316b61b98e74a934bac891c4eb46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Type: 2
+  Worker: {fileID: 0}
+  Inputs: []
+  Value: 0
   InputConnection: {fileID: 3717082830405839967}
   OutputConnection: {fileID: 0}
   UI: {fileID: 1884646864770361003}
   NameField: {fileID: 3678467631624816143}
-  nameUnsaved: 
-  Worker: {fileID: 0}
-  Inputs: []
-  Value: 0
+  NameUnsaved: 
   CountField: {fileID: 2186520524246125040}
   PriceField: {fileID: 4413425492969264198}
   PrioritySlider: {fileID: 2832939708742616015}

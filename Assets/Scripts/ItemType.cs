@@ -1,8 +1,8 @@
 ﻿public enum ItemType
 {
-    Input,
-    Machine,
-    Output,
-    Worker,
-    Line
+    Input = 1,
+    Machine = 0,
+    Output = 2,
+    Worker = 3,
+    Line = 4
 }

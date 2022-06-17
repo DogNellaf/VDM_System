@@ -4777,9 +4777,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ff2806b895a80e4bb20e2cbb47efc42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Type: 3
+  Worker: {fileID: 0}
+  Inputs: []
+  Value: 0
+  InputConnection: {fileID: 0}
+  OutputConnection: {fileID: 0}
   UI: {fileID: 2210377512718728593}
   NameField: {fileID: 9222341593392973295}
-  nameUnsaved: 
+  NameUnsaved: 
   PerformanceField: {fileID: 7734404332125943734}
   WorkField: {fileID: 5910063383867199288}
   RelaxField: {fileID: 3053944769861145018}

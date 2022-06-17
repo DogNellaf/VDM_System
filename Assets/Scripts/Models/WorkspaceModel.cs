@@ -19,7 +19,7 @@ public class WorkspaceModel : Element
     public GameObject Ground;
 
     // Digital Twin Object
-    public GameObject DigitalTwin => GameObject.Find("Factory");
+    public GameObject DigitalTwin;
 
     // Canvas
     public GameObject Canvas;

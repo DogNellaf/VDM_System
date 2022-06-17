@@ -1,5 +1,7 @@
+using SFB;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
 
 // Script for main menu interactions
 public class MenuController : Element
@@ -10,7 +12,7 @@ public class MenuController : Element
     // Start of menu
     public override void Start()
     {
-        model = this.TwinApplication.Model as MenuModel;
+        model = TwinApplication.Model as MenuModel;
         model.VersionTextArea.text = model.Version;
 
         //if (factoryModel is null)
@@ -37,16 +39,27 @@ public class MenuController : Element
     }
 
     // Load virtual dublicates from file
-    public void ShowLoadedMainFrame()
+    public void Load()
     {
-        SceneManager.LoadScene(model.MainSceneName);
-        //TODO: load function to csv/json/xml files
+        // Open file with filter
+        var extensions = new[] {
+            new ExtensionFilter("Digital Twin File", "json"),
+        };
+        var path = StandaloneFileBrowser.OpenFilePanel("Open File", "", extensions, false)[0];
+        PlayerPrefs.SetString("LoadedDigitalTwin", path);
+        ShowWorkspace();
     }
 
-    // Start Main Frame with empty default VirtualDouble
-    public void ShowDefaultMainFrame()
+    // Start empty Digital Twin
+    public void Create()
+    {
+        PlayerPrefs.SetString("LoadedDigitalTwin", "");
+        ShowWorkspace();
+    }
+
+    // Start Workspace
+    public void ShowWorkspace()
     {
         SceneManager.LoadScene(model.MainSceneName);
-        //TODO: Add default Main Frame
     }
 }

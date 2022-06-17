@@ -10,7 +10,7 @@ public class ItemJsonModel
     public Quaternion Rotation;
     public Vector3 Scale;
     public ItemType Type;
-    public Dictionary<string, string> Properties;
+    public List<string> Properties;
     public List<string> Connectons;
 
     public ItemJsonModel()

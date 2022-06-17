@@ -867,14 +867,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77bef7aacf7fd314d95dee3a1e54f089, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Type: 1
+  Worker: {fileID: 0}
+  Inputs: []
+  Value: 0
+  InputConnection: {fileID: 0}
+  OutputConnection: {fileID: 9107409975142274733}
   UI: {fileID: 3046975890421035392}
   NameField: {fileID: 7359857795234423960}
-  nameUnsaved: 
+  NameUnsaved: 
   IncreaseField: {fileID: 8305852795688691175}
   LimitField: {fileID: 8972880644254904777}
   PrioritySlider: {fileID: 7300341310817904027}
   PriorityLabel: {fileID: 1119873286771924356}
-  OutputConnection: {fileID: 9107409975142274733}
   Increase: 0
   Limit: 0
   Priority: 0

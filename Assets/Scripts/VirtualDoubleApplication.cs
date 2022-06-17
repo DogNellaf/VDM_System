@@ -19,7 +19,7 @@ public class VirtualDoubleApplication : MonoBehaviour
     public bool IsDebug = false;
 
     // Start is called before the first frame update
-    private void Start()
+    private void Awake()
     {
         Model = GetElement("Model");
         View = GetElement("View");

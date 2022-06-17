@@ -164,7 +164,7 @@ public class ItemComponent : Element
         line.name = $"line |{start}| to |{end}|";
     }
     
-    public virtual Dictionary<string, string> GetProperties()
+    public virtual List<string> GetProperties()
     {
         throw new System.Exception();
     }

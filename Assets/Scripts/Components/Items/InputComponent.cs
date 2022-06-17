@@ -25,14 +25,9 @@ public class InputComponent : ItemComponent
         base.Start();
     }
 
-    public override Dictionary<string, string> GetProperties()
+    public override List<string> GetProperties()
     {
-        return new Dictionary<string, string>
-        {
-            {"Increase", $"{Increase}"},
-            {"Limit", $"{Limit}"},
-            {"Priority", $"{Priority}"},
-        };
+        return new List<string> { $"{Increase}", $"{Limit}", $"{Priority}" };
     }
 
     // Changing increase value
