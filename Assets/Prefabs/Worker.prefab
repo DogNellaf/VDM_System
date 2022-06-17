@@ -4683,6 +4683,7 @@ GameObject:
   - component: {fileID: 685068371196939148}
   - component: {fileID: 256997816423099024}
   - component: {fileID: 7455565791636458362}
+  - component: {fileID: 814447247662395819}
   m_Layer: 0
   m_Name: Worker
   m_TagString: Untagged
@@ -4746,8 +4747,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.68604803, y: 1.6954829, z: 0.51129067}
-  m_Center: {x: 0.007878542, y: 0.8280167, z: 0.065828145}
+  m_Size: {x: 0.39727592, y: 1.6954829, z: 0.51129067}
+  m_Center: {x: -0.007804394, y: 0.8280167, z: 0.065828145}
 --- !u!54 &256997816423099024
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4785,6 +4786,20 @@ MonoBehaviour:
   Performance: 0
   WorkTime: 0
   RelaxTime: 0
+--- !u!64 &814447247662395819
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7583954825140334602}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
 --- !u!1 &7709027824140063569
 GameObject:
   m_ObjectHideFlags: 0

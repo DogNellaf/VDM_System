@@ -11,8 +11,15 @@ public class MachineComponent : ItemComponent
     [SerializeField] private TMP_InputField MaxPowerField;
     [SerializeField] private TMP_InputField SelfPowerField;
 
-    public string Input;
-    public string Output;
+    [SerializeField] private GameObject InputConnection;
+    [SerializeField] private GameObject OutputConnection;
+
+    public List<InputComponent> Inputs = new();
+    public List<WorkerComponent> Workers = new();
+    public List<(Vector3 start, Vector3 end)> Lines = new();
+
+    public string InputCount;
+    public string OutputCount;
     public float MaxPower;
     public float SelfPower;
 
@@ -20,6 +27,86 @@ public class MachineComponent : ItemComponent
     private string outputUnsaved;
     private float maxPowerUnsaved;
     private float selfPowerUnsaved;
+
+    private WorkspaceModel model => TwinApplication.GetModel<WorkspaceModel>();
+
+
+    public override void OnMouseDown()
+    {
+        Ray ray = TwinApplication.Camera.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hit))
+        {
+            string hitObjectName = hit.collider.gameObject.name;
+            if (hitObjectName == InputConnection.name)
+            {
+                var inputObject = model.SelectedOutputConnection;
+                var connection = inputObject.GetComponent<InputComponent>();
+                if (connection is not null)
+                {
+                    if (connection.gameObject != gameObject)
+                    {
+                        if (!Inputs.Contains(connection))
+                        {
+                            AddInput(connection);
+                            Debug.Log($"Связь между {inputObject.name} и {name} создана");
+
+                            var start = inputObject.transform.Find("ConnectionOutput").transform.position;
+                            var end = InputConnection.transform.position;
+
+                            Debug.Log(start);
+                            Debug.Log(end);
+                            DrawLine(start, end);
+
+                            //Debug.DrawLine(start, end, Color.green, float.PositiveInfinity);
+                            //Lines.Add((start, end));
+                        }
+                        else
+                        {
+                            Debug.LogError("Такое соединение уже есть");
+                        }
+                    }
+                    else
+                    {
+                        Debug.LogError("Создание цикличных связей запрещено");
+                    }
+                }
+                else
+                {
+                    Debug.Log("Сперва выберите результирующее соединение");
+                }
+            }
+            else if (hitObjectName == OutputConnection.name)
+            {
+
+            }
+            else
+            {
+                base.OnMouseDown();
+            }
+
+            //foreach (var line in Lines)
+            //{
+            //    Debug.DrawLine(line.start, line.end, Color.green, 10000000f);
+            //}
+        }
+    }
+
+    private static void DrawLine(Vector3 start, Vector3 end)
+    {
+        GameObject segObj = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+        var p3 = (start + end) * 0.5f;
+        segObj.transform.localPosition = p3;
+        segObj.transform.rotation = Quaternion.Euler(0, -90, 0);
+        segObj.transform.localScale = new Vector3(0.01f, 0.01f, Vector3.Distance(start, end));
+        segObj.transform.position = p3; //placebond here
+        segObj.transform.LookAt(end);
+    }
+
+    public void AddInput(InputComponent input)
+    {
+        Inputs.Add(input);
+        Debug.DrawLine(input.gameObject.transform.position, InputConnection.transform.position);
+    }    
 
     // Changing input
     public void ChangeInput(string input) => inputUnsaved = input;
@@ -58,8 +145,8 @@ public class MachineComponent : ItemComponent
     // Save
     public override void Save()
     {
-        Output = outputUnsaved;
-        Input = inputUnsaved;
+        OutputCount = outputUnsaved;
+        InputCount = inputUnsaved;
         MaxPower = maxPowerUnsaved;
         SelfPower = selfPowerUnsaved;
         base.Save();
@@ -70,8 +157,8 @@ public class MachineComponent : ItemComponent
     // Abort
     public override void Abort()
     {
-        outputUnsaved = Output;
-        inputUnsaved = Input;
+        outputUnsaved = OutputCount;
+        inputUnsaved = InputCount;
         maxPowerUnsaved = MaxPower;
         selfPowerUnsaved = SelfPower;
         base.Abort();
@@ -82,8 +169,8 @@ public class MachineComponent : ItemComponent
     // Change fields
     public void UpdateFieldValues()
     {
-        OutputField.text = Output;
-        InputField.text = Input;
+        OutputField.text = OutputCount;
+        InputField.text = InputCount;
         MaxPowerField.text = MaxPower.ToString();
         SelfPowerField.text = SelfPower.ToString();
     }

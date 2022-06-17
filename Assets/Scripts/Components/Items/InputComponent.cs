@@ -11,6 +11,8 @@ public class InputComponent : ItemComponent
     [SerializeField] private Slider PrioritySlider;
     [SerializeField] private TextMeshProUGUI PriorityLabel;
 
+    [SerializeField] private GameObject OutputConnection;
+
     public float Increase;
     public float Limit;
     public float Priority;
@@ -23,6 +25,24 @@ public class InputComponent : ItemComponent
     {
         priorityUnsaved = 50;
         base.Start();
+    }
+
+    public override void OnMouseDown()
+    {
+        Ray ray = TwinApplication.Camera.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hit))
+        {
+            string hitObjectName = hit.collider.gameObject.name;
+            if (hitObjectName == OutputConnection.name)
+            {
+                TwinApplication.GetModel<WorkspaceModel>().SelectedOutputConnection = gameObject;
+                Debug.Log($"Результирующее соединение в объекте {name} выбрано");
+            }
+            else
+            {
+                base.OnMouseDown();
+            }
+        }
     }
 
     // Changing increase value

@@ -35,4 +35,11 @@ public class WorkspaceModel : Element
 
     // Global count of workers
     public int WorkersCount = 0;
+
+    // Current selected input connection
+
+    //public InputComponent SelectedInputConnection;
+
+    // Current selected output connection
+    public GameObject SelectedOutputConnection;
 }
