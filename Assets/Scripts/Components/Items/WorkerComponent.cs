@@ -18,6 +18,16 @@ public class WorkerComponent : ItemComponent
     private float workTimeUnsaved;
     private float relaxTimeUnsaved;
 
+    public override Dictionary<string, string> GetProperties()
+    {
+        return new Dictionary<string, string>
+        {
+            {"Performance", $"{Performance}"},
+            {"WorkTime", $"{WorkTime}"},
+            {"RelaxTime", $"{RelaxTime}"},
+        };
+    }
+
     // Changing performance value
     public void ChangePerformance(string performance)
     {

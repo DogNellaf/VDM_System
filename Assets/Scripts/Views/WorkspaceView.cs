@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class WorkspaceView : Element
@@ -82,6 +83,18 @@ public class WorkspaceView : Element
                 cameraPosition = new Vector3(cameraPosition.x, model.MaxCameraHeight, cameraPosition.z);
             }
         }
+    }
+
+    // Run the digital twin
+    public void Run()
+    {
+
+    }
+
+    // Timer
+    public IEnumerable MakeStep()
+    {
+        throw new System.Exception("Function is not created");
     }
 
     // Go to the menu without saving

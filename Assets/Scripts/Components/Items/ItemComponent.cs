@@ -5,22 +5,28 @@ using UnityEngine;
 
 #nullable enable
 
+
 public class ItemComponent : Element
 {
+    public ItemType Type;
+    public WorkerComponent Worker;
+    public List<ItemComponent> Inputs = new();
+    public float Value;
+
     [SerializeField] protected GameObject InputConnection;
     [SerializeField] protected GameObject OutputConnection;
     [SerializeField] protected GameObject UI;
     [SerializeField] protected TMP_InputField NameField;
-    [SerializeField] protected string nameUnsaved;
+    [SerializeField] protected string NameUnsaved;
 
-    protected WorkspaceModel model => TwinApplication.GetModel<WorkspaceModel>();
-    protected string? inputName
+    protected WorkspaceModel Model => TwinApplication.GetModel<WorkspaceModel>();
+    protected string? InputName
     {
         get
         {
             try
             {
-                return InputConnection.gameObject.name;
+                return InputConnection.name;
             }
             catch
             {
@@ -28,13 +34,13 @@ public class ItemComponent : Element
             }
         }
     }
-    protected string? outputName
+    protected string? OutputName
     {
         get
         {
             try
             {
-                return OutputConnection.gameObject.name;
+                return OutputConnection.name;
             }
             catch
             {
@@ -42,10 +48,6 @@ public class ItemComponent : Element
             }
         }
     }
-
-    public WorkerComponent Worker;
-    public List<ItemComponent> Inputs = new();
-    public float Value;
 
     // Start function
     public override void Start()
@@ -53,8 +55,13 @@ public class ItemComponent : Element
         if (NameField != null)
         {
             NameField.text = gameObject.name;
-            nameUnsaved = gameObject.name;
+            NameUnsaved = gameObject.name;
         }
+    }
+
+    public virtual void Step()
+    {
+
     }
 
     // Add input in the list
@@ -74,15 +81,14 @@ public class ItemComponent : Element
         Ray ray = TwinApplication.Camera.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
-            Debug.Log("true");
             string hitObjectName = hit.collider.gameObject.name;
             if (hitObjectName == name)
             {
                 UI.SetActive(true);
             }
-            else if (hitObjectName == inputName)
+            else if (hitObjectName == InputName)
             {
-                var inputObject = model.SelectedOutputConnection;
+                var inputObject = Model.SelectedOutputConnection;
                 var connection = inputObject.GetComponent<ItemComponent>();
                 if (connection is not null)
                 {
@@ -91,7 +97,7 @@ public class ItemComponent : Element
                         if (!Inputs.Contains(connection))
                         {
                             AddInput(connection);
-                            model.SelectedOutputConnection = null;
+                            Model.SelectedOutputConnection = null;
                         }
                         else
                         {
@@ -108,7 +114,7 @@ public class ItemComponent : Element
                     Debug.Log("Сперва выберите результирующее соединение");
                 }
             }
-            else if (hitObjectName == outputName)
+            else if (hitObjectName == OutputName)
             {
                 TwinApplication.GetModel<WorkspaceModel>().SelectedOutputConnection = gameObject;
                 Debug.Log($"Результирующее соединение в объекте {name} выбрано");
@@ -126,12 +132,12 @@ public class ItemComponent : Element
     public void Delete() => Destroy(gameObject);
 
     // Changing name
-    public void ChangeName(string name) => nameUnsaved = name;
+    public void ChangeName(string name) => NameUnsaved = name;
 
     // Save
     public virtual void Save()
     {
-        gameObject.name = nameUnsaved;
+        gameObject.name = NameUnsaved;
         NameField.text = gameObject.name;
         DisactivaveUI();
     }
@@ -139,12 +145,12 @@ public class ItemComponent : Element
     // Abort
     public virtual void Abort()
     {
-        nameUnsaved = gameObject.name;
-        NameField.text = nameUnsaved;
+        NameUnsaved = gameObject.name;
+        NameField.text = NameUnsaved;
         DisactivaveUI();
     }
 
-    protected static void DrawLine(Vector3 start, Vector3 end, Transform transform)
+    public static void DrawLine(Vector3 start, Vector3 end, Transform transform)
     {
         GameObject line = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
         var p3 = (start + end) * 0.5f;
@@ -156,5 +162,10 @@ public class ItemComponent : Element
         line.transform.LookAt(end);
         line.layer = LayerMask.NameToLayer("Ignore Raycast");
         line.name = $"line |{start}| to |{end}|";
+    }
+    
+    public virtual Dictionary<string, string> GetProperties()
+    {
+        throw new System.Exception();
     }
 }

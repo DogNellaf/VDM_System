@@ -16,7 +16,11 @@ public class WorkspaceController : Element
     // Start of workspace
     public override void Start()
     {
-        //model = Application.GetModel<WorkspaceModel>();
+        var twinPath = PlayerPrefs.GetString("LoadedDigitalTwin");
+        if (!string.IsNullOrEmpty(twinPath))
+        {
+            TwinApplication.View.gameObject.GetComponent<JsonSaveComponent>().Load(twinPath);
+        }
     }
 
     // Every frame

@@ -25,6 +25,16 @@ public class OutputComponent : ItemComponent
         base.Start();
     }
 
+    public override Dictionary<string, string> GetProperties()
+    {
+        return new Dictionary<string, string>
+        {
+            {"Count", $"{Count}"},
+            {"Price", $"{Price}"},
+            {"Priority", $"{Priority}"},
+        };
+    }
+
     // Changing increase value
     public void ChangeCount(string count)
     {

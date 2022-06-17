@@ -21,6 +21,17 @@ public class MachineComponent : ItemComponent
     private float maxPowerUnsaved;
     private float selfPowerUnsaved;
 
+    public override Dictionary<string, string> GetProperties()
+    {
+        return new Dictionary<string, string>
+        {
+            {"InputCount", $"{InputCount}"},
+            {"OutputCount", $"{OutputCount}"},
+            {"MaxPower", $"{MaxPower}"},
+            {"SelfPower", $"{SelfPower}"},
+        };
+    }
+
     // Changing input
     public void ChangeInput(string input) => inputUnsaved = input;
 
