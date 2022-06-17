@@ -345,7 +345,7 @@ GameObject:
   - component: {fileID: 4008106680396091372}
   - component: {fileID: 3631545795794150577}
   m_Layer: 0
-  m_Name: PipeCartVer1
+  m_Name: Output
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -11,7 +11,7 @@ public class FantomItemMovingComponent : Element
     // Update is called once per frame
     public override void FixedUpdate()
     {
-        Ray ray = application.Camera.ScreenPointToRay(Input.mousePosition);
+        Ray ray = TwinApplication.Camera.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
             var point = hit.point;
@@ -30,7 +30,13 @@ public class FantomItemMovingComponent : Element
             var realItem = Instantiate(orignal);
             realItem.transform.SetParent(transform.parent);
             realItem.transform.position = transform.position;
-            (application.View as WorkspaceView).ActivateCanvas();
+
+            var controller = TwinApplication.GetController<WorkspaceController>();
+            controller.IncreseCount(orignal.name);
+            int count = controller.GetCount(orignal.name);
+            realItem.name = $"{orignal.name} {count}";
+
+            (TwinApplication.View as WorkspaceView).ActivateCanvas();
             Destroy(gameObject);
         }
     }

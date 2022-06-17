@@ -10,7 +10,7 @@ public class MenuController : Element
     // Start of menu
     public override void Start()
     {
-        model = this.application.Model as MenuModel;
+        model = this.TwinApplication.Model as MenuModel;
         model.VersionTextArea.text = model.Version;
 
         //if (factoryModel is null)
@@ -27,7 +27,7 @@ public class MenuController : Element
     }
 
     // Close the application
-    public void Quit() => Application.Quit();
+    public void Quit() => UnityEngine.Application.Quit();
 
     // Switch current scene to settings frame
     public void ShowSettings()

@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 public class WorkspaceView : Element
 {
     // Model for refactoring
-    private WorkspaceModel model => application.Model as WorkspaceModel;
+    private WorkspaceModel model => TwinApplication.Model as WorkspaceModel;
 
     // Check mouse middle push
     private bool isMiddleMouseDown => Input.GetMouseButton(2);
@@ -20,11 +20,11 @@ public class WorkspaceView : Element
     { 
         get
         {
-            return application.Camera.transform.position;
+            return TwinApplication.Camera.transform.position;
         }
         set
         {
-            application.Camera.transform.position = value;
+            TwinApplication.Camera.transform.position = value;
         }
     }
 
@@ -69,7 +69,7 @@ public class WorkspaceView : Element
         {
             cameraPosition += new Vector3(0, -mouseWhellScroll * model.UserHeightIncreaseSpeed, 0);
         }
-        else if (application.IsDebug)
+        else if (TwinApplication.IsDebug)
         {
             if (cameraPosition.y <= model.MinCameraHeight)
             {
@@ -99,7 +99,7 @@ public class WorkspaceView : Element
     // Find the world position per click
     public void SearchPosition(Vector3 position)
     {
-        Debug.Log(application.Camera.ScreenToWorldPoint(position));
+        Debug.Log(TwinApplication.Camera.ScreenToWorldPoint(position));
     }
 
     // Make object create stage
@@ -138,7 +138,7 @@ public class WorkspaceView : Element
                 cameraPosition -= move;
             }
         }
-        else if (application.IsDebug)
+        else if (TwinApplication.IsDebug)
         {
             Debug.LogWarning("The ground is out of sight");
         }

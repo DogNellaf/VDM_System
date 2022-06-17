@@ -19,7 +19,7 @@ public class VirtualDoubleApplication : MonoBehaviour
     public bool IsDebug = false;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         Model = GetElement("Model");
         View = GetElement("View");
@@ -47,9 +47,24 @@ public class VirtualDoubleApplication : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         Controller.FixedUpdate();
+    }
+
+    public T GetModel<T>() where T: Element
+    {
+        return Model as T;
+    }
+
+    public T GetView<T>() where T : Element
+    {
+        return View as T;
+    }
+
+    public T GetController<T>() where T : Element
+    {
+        return Controller as T;
     }
 
     #region Utils

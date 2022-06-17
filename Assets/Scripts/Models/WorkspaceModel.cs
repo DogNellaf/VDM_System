@@ -23,4 +23,16 @@ public class WorkspaceModel : Element
 
     // Canvas
     public GameObject Canvas;
+
+    // Global count of machines
+    public int MachinesCount = 0;
+
+    // Global count of inputs
+    public int InputsCount = 0;
+
+    // Global count of outputs
+    public int OutputsCount = 0;
+
+    // Global count of workers
+    public int WorkersCount = 0;
 }

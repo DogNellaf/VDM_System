@@ -19,7 +19,7 @@ public class Element : MonoBehaviour
     public virtual void OnMouseUp() { }
 
     // Get current application and all of instances
-    public VirtualDoubleApplication application
+    public VirtualDoubleApplication TwinApplication
     {
         get
         {
