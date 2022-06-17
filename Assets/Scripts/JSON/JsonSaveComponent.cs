@@ -2,6 +2,7 @@ using LitJson;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 
 public sealed class JsonSaveComponent : Element
@@ -31,16 +32,39 @@ public sealed class JsonSaveComponent : Element
     {
         string raw = File.ReadAllText(path);
         var rawItems = raw.Split('…');
+        var models = new List<ItemJsonModel>();
+        var objects = new List<GameObject>();
         foreach (string rawItem in rawItems)
         {
             var item = JsonUtility.FromJson<ItemJsonModel>(rawItem);
-            GameObject newGameObject = CreateObjectByType(item.Type, item.Properties);
-            newGameObject.transform.parent = factory.transform;
-            newGameObject.transform.rotation = item.Rotation;
-            newGameObject.transform.localScale = item.Scale;
-            newGameObject.transform.position = item.Position;
-            newGameObject.name = item.Name;
+            if (item.Type != ItemType.Line)
+            {
+                GameObject newGameObject = CreateObjectByType(item.Type, item.Properties);
+                newGameObject.transform.parent = factory.transform;
+                newGameObject.transform.rotation = item.Rotation;
+                newGameObject.transform.localScale = item.Scale;
+                newGameObject.transform.position = item.Position;
+                newGameObject.name = item.Name;
+                models.Add(item);
+                objects.Add(newGameObject);
+            }
         }
+
+        for (int i = 0; i < rawItems.Length; i++)
+        {
+            var item = models[i];
+            if (item.Type != ItemType.Line)
+            {
+                var itemObject = objects[i];
+                var component = itemObject.GetComponent<ItemComponent>();
+                foreach (string connection in item.Connectons)
+                {
+                    var connectonObject = objects.Single(x => x.name == connection);
+                    component.AddInput(connectonObject.GetComponent<ItemComponent>());
+                }
+            }
+        }
+
         Debug.Log("Цифровой двойник успешно загружен");
     }
 
@@ -55,6 +79,7 @@ public sealed class JsonSaveComponent : Element
                 inputComponent.ChangeLimit(properties[1]);
                 inputComponent.ChangePriority(float.Parse(properties[2]));
                 inputComponent.Save();
+                model.InputsCount++;
                 return input;
             case ItemType.Output:
                 var output = Instantiate(Output);
@@ -63,6 +88,7 @@ public sealed class JsonSaveComponent : Element
                 outputComponent.ChangePrice(properties[1]);
                 outputComponent.ChangePriority(float.Parse(properties[2]));
                 outputComponent.Save();
+                model.OutputsCount++;
                 return output;
             case ItemType.Machine:
                 var machine = Instantiate(Machine);
@@ -72,6 +98,7 @@ public sealed class JsonSaveComponent : Element
                 machineComponent.ChangeMaxPower(properties[2]);
                 machineComponent.ChangeSelfPower(properties[3]);
                 machineComponent.Save();
+                model.MachinesCount++;
                 return machine;
             case ItemType.Worker:
                 var worker = Instantiate(Worker);
@@ -80,6 +107,7 @@ public sealed class JsonSaveComponent : Element
                 workerComponent.ChangeWorkTime(properties[1]);
                 workerComponent.ChangeRelaxTime(properties[2]);
                 workerComponent.Save();
+                model.WorkersCount++;
                 return worker;
             default:
                 var line = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
