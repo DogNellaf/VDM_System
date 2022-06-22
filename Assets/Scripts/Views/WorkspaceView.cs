@@ -94,9 +94,24 @@ public class WorkspaceView : Element
     // Run the digital twin
     public void Run()
     {
-        model.IsSimulationStarted = true;
-        StartCoroutine(Simulate());
-        Debug.Log("Digital Twin started");
+        if (!model.IsSimulationStarted)
+        {
+            var elements = model.DigitalTwin.GetComponentsInChildren<ItemComponent>();
+            foreach (var element in elements)
+            {
+                element.Value = 0;
+            }
+
+            model.IsSimulationStarted = true;
+            StartCoroutine(Simulate());
+            Debug.Log("Digital Twin started");
+        }
+        else
+        {
+            model.IsSimulationStarted = false;
+            Debug.Log("Digital Twin stoped");
+        }
+
     }
 
     // Every second function
@@ -105,12 +120,20 @@ public class WorkspaceView : Element
         var items = model.DigitalTwin.transform.GetComponentsInChildren<ItemComponent>();
         var outputs = items.Where(x => x is OutputComponent);
         var inputs = items.Where(x => x is InputComponent);
-        var mahine = items.Where(x => x is MachineComponent);
+        var machines = items.Where(x => x is MachineComponent);
         while (model.IsSimulationStarted)
         {
             foreach (var input in inputs)
             {
                 input.Simulate();
+            }
+            foreach (var machine in machines)
+            {
+                machine.Simulate();
+            }
+            foreach (var output in outputs)
+            {
+                output.Simulate();
             }
             yield return new WaitForSeconds(model.SimulationSpeed);
         }

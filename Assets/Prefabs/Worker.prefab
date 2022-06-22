@@ -1122,7 +1122,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1840150656004889852
 Transform:
   m_ObjectHideFlags: 0
@@ -1137,7 +1137,7 @@ Transform:
   m_Children:
   - {fileID: 1155089027412265350}
   m_Father: {fileID: 7094381177928755888}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 37.378, y: 180, z: 180}
 --- !u!33 &5818191787124871657
 MeshFilter:
@@ -2062,7 +2062,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7094381177928755888}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!137 &2509767696408877018
 SkinnedMeshRenderer:
@@ -2618,13 +2618,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4761591408425417590}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.10272607, y: -0.034793068, z: -0.008252633, w: 0.9940668}
+  m_LocalPosition: {x: -0.007991497, y: -0.8737103, z: -0.18420412}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7094381177928755888}
-  m_RootOrder: 5
+  m_Father: {fileID: 3324814152910195236}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!137 &6750057545610380865
 SkinnedMeshRenderer:
@@ -2861,7 +2861,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7094381177928755888}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!137 &6685188283297223265
 SkinnedMeshRenderer:
@@ -3730,7 +3730,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 5967045328354819968}
   m_TextViewport: {fileID: 1033954415729015264}
   m_TextComponent: {fileID: 6590226039804332103}
@@ -3950,7 +3950,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 2723498934603550243}
   m_TextViewport: {fileID: 5432190409194293630}
   m_TextComponent: {fileID: 6554175904950267800}
@@ -4708,7 +4708,6 @@ Transform:
   - {fileID: 1529528038561584167}
   - {fileID: 3137778595596533152}
   - {fileID: 5626627173374293593}
-  - {fileID: 1715191796935935844}
   - {fileID: 3324814152910195236}
   - {fileID: 8586223654390685219}
   - {fileID: 721222022919956145}
@@ -4779,13 +4778,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 3
   Worker: {fileID: 0}
-  Inputs: []
-  Value: 0
+  Outputs: []
+  Priority: 0
   InputConnection: {fileID: 0}
   OutputConnection: {fileID: 0}
   UI: {fileID: 2210377512718728593}
   NameField: {fileID: 9222341593392973295}
+  PrioritySlider: {fileID: 0}
+  PriorityLabel: {fileID: 0}
+  ValueField: {fileID: 0}
   NameUnsaved: 
+  PriorityUnsaved: 0
   PerformanceField: {fileID: 7734404332125943734}
   WorkField: {fileID: 5910063383867199288}
   RelaxField: {fileID: 3053944769861145018}
@@ -4837,8 +4840,9 @@ Transform:
   - {fileID: 5078546915144004440}
   - {fileID: 1486624404959198491}
   - {fileID: 3048062889034070455}
+  - {fileID: 1715191796935935844}
   m_Father: {fileID: 7094381177928755888}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7750863816139498542
 GameObject:

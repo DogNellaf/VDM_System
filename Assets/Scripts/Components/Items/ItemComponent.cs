@@ -1,7 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 #nullable enable
 
@@ -11,15 +12,36 @@ public class ItemComponent : Element
     public ItemType Type;
     public WorkerComponent Worker;
     public List<ItemComponent> Outputs = new();
-    public float Value;
+    private float value = 0;
+    public float Value { 
+        get 
+        { 
+            return value;
+        }
+        set
+        {
+            this.value = value;
+            if (ValueField is not null)
+            {
+                ValueField.text = $"{this.value}";
+            }
+        } 
+    }
+    public float Priority;
 
     [SerializeField] protected GameObject InputConnection;
     [SerializeField] protected GameObject OutputConnection;
     [SerializeField] protected GameObject UI;
     [SerializeField] protected TMP_InputField NameField;
+    [SerializeField] protected Slider PrioritySlider;
+    [SerializeField] protected TextMeshProUGUI PriorityLabel;
+    [SerializeField] protected TextMeshPro ValueField;
     [SerializeField] protected string NameUnsaved;
+    [SerializeField] protected float PriorityUnsaved;
 
     protected WorkspaceModel Model => TwinApplication.GetModel<WorkspaceModel>();
+    protected List<ItemComponent> Inputs => Model.DigitalTwin.transform.GetComponentsInChildren<ItemComponent>().Where(x => x.Outputs.Contains(this)).ToList();
+
     protected string? InputName
     {
         get
@@ -49,33 +71,17 @@ public class ItemComponent : Element
         }
     }
 
+    #region Unity
+
     // Start function
     public override void Start()
     {
+        PriorityUnsaved = 50;
         if (NameField != null)
         {
             NameField.text = gameObject.name;
             NameUnsaved = gameObject.name;
         }
-    }
-
-    // Digital Twin simulation
-    public virtual void Simulate()
-    {
-        throw new System.Exception("The method is not implemented");
-    }
-
-    // Add output in the list
-    public void AddOutput(ItemComponent item)
-    {
-        // Add output to the list
-        Outputs.Add(item);
-        Debug.Log($"Связь между {item.name} и {name} создана");
-
-        // Get start, end positions and draw line
-        var start = transform.Find("ConnectionOutput").transform.position;
-        var end = item.InputConnection.transform.position;
-        DrawLine(start, end, transform);
     }
 
     // When User click
@@ -147,6 +153,19 @@ public class ItemComponent : Element
         }
     }
 
+    #endregion
+
+    // Add output in the list
+    public void AddOutput(ItemComponent item)
+    {
+        // Add output to the list
+        Outputs.Add(item);
+        Debug.Log($"Связь между {item.name} и {name} создана");
+
+        // Get start, end positions and draw line
+        DrawLine(item.transform.Find("ConnectionInput").gameObject, OutputConnection, transform);
+    }
+
     // Disactive panel
     public void DisactivaveUI()
     {
@@ -159,11 +178,21 @@ public class ItemComponent : Element
     // Changing name
     public void ChangeName(string name) => NameUnsaved = name;
 
+    // Changing priority
+    public void ChangePriority(float priority)
+    {
+        PriorityUnsaved = Mathf.Round(priority);
+        if (PriorityLabel is not null)
+        {
+            PriorityLabel.text = $"{PriorityUnsaved}%";
+        }
+    }
+
     // Save
     public virtual void Save()
     {
-        gameObject.name = NameUnsaved;
-        NameField.text = gameObject.name;
+        Priority = PriorityUnsaved;
+        UpdateValues(NameUnsaved);
         DisactivaveUI();
     }
 
@@ -171,26 +200,53 @@ public class ItemComponent : Element
     public virtual void Abort()
     {
         NameUnsaved = gameObject.name;
-        NameField.text = NameUnsaved;
+        NameField.text = gameObject.name;
+
+        PriorityUnsaved = Priority;
+        PrioritySlider.value = PriorityUnsaved;
         DisactivaveUI();
     }
 
-    public static void DrawLine(Vector3 start, Vector3 end, Transform transform)
+    #region Utils
+
+    // Update fields values
+    protected void UpdateValues(string value)
+    {
+        gameObject.name = value;
+        NameField.text = value;
+        if (PrioritySlider is not null)
+        {
+            PrioritySlider.value = Priority;
+        }
+    }
+
+    // Draw lines for connection
+    public static void DrawLine(GameObject start, GameObject end, Transform transform)
     {
         GameObject line = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
-        var p3 = (start + end) * 0.5f;
-        line.transform.parent = transform.parent;
-        line.transform.localPosition = p3;
-        line.transform.rotation = Quaternion.Euler(0, -90, 0);
-        line.transform.localScale = new Vector3(0.01f, 0.01f, Vector3.Distance(start, end));
-        line.transform.position = p3; //placebond here
-        line.transform.LookAt(end);
-        line.layer = LayerMask.NameToLayer("Ignore Raycast");
-        line.name = $"line |{start}| to |{end}|";
+        var component = line.AddComponent<LineComponent>();
+        component.StartObject = start;
+        component.EndObject = end;
+        component.Draw(transform.parent);
     }
-    
+
+    protected LineComponent GetLine(GameObject start, GameObject end) => Model.DigitalTwin.GetComponentsInChildren<LineComponent>().Single(x => x.EndObject == start && x.StartObject == end);
+
+    #endregion
+
+    #region Empty virtuals
+
+    // Get property for JSON
     public virtual List<string> GetProperties()
     {
         throw new System.Exception();
     }
+
+    // Digital Twin simulation
+    public virtual void Simulate()
+    {
+        throw new System.Exception("The method is not implemented");
+    }
+
+    #endregion
 }

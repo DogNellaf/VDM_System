@@ -20,8 +20,11 @@ public sealed class JsonSaveComponent : Element
         string json = "";
         foreach (Transform child in factory.transform)
         {
-            var item = new ItemJsonModel(child.gameObject);
-            json += $"{JsonUtility.ToJson(item)}…";
+            if (child.gameObject.GetComponent<ItemComponent>() is not null)
+            {
+                var item = new ItemJsonModel(child.gameObject);
+                json += $"{JsonUtility.ToJson(item)}…";
+            }
         }
         json = json.Trim('…');
         File.WriteAllText("digital.json", json);
@@ -36,17 +39,24 @@ public sealed class JsonSaveComponent : Element
         var objects = new List<GameObject>();
         foreach (string rawItem in rawItems)
         {
-            var item = JsonUtility.FromJson<ItemJsonModel>(rawItem);
-            if (item.Type != ItemType.Line)
+            try
             {
-                GameObject newGameObject = CreateObjectByType(item.Type, item.Properties);
-                newGameObject.transform.parent = factory.transform;
-                newGameObject.transform.rotation = item.Rotation;
-                newGameObject.transform.localScale = item.Scale;
-                newGameObject.transform.position = item.Position;
-                newGameObject.name = item.Name;
-                models.Add(item);
-                objects.Add(newGameObject);
+                var item = JsonUtility.FromJson<ItemJsonModel>(rawItem);
+                if (item.Type != ItemType.Line)
+                {
+                    GameObject newGameObject = CreateObjectByType(item.Type, item.Properties);
+                    newGameObject.transform.parent = factory.transform;
+                    newGameObject.transform.rotation = item.Rotation;
+                    newGameObject.transform.localScale = item.Scale;
+                    newGameObject.transform.position = item.Position;
+                    newGameObject.name = item.Name;
+                    models.Add(item);
+                    objects.Add(newGameObject);
+                }
+            }
+            catch
+            {
+                continue;
             }
         }
 
@@ -60,7 +70,7 @@ public sealed class JsonSaveComponent : Element
                 foreach (string connection in item.Connectons)
                 {
                     var connectonObject = objects.Single(x => x.name == connection);
-                    connectonObject.GetComponent<ItemComponent>().AddOutput(component);
+                    component.GetComponent<ItemComponent>().AddOutput(connectonObject.GetComponent<ItemComponent>());
                 }
             }
         }
@@ -97,6 +107,8 @@ public sealed class JsonSaveComponent : Element
                 machineComponent.ChangeOutput(properties[1]);
                 machineComponent.ChangeMaxPower(properties[2]);
                 machineComponent.ChangeSelfPower(properties[3]);
+                machineComponent.ChangePriority(float.Parse(properties[4]));
+                machineComponent.ChangeKoef(properties[5]);
                 machineComponent.Save();
                 model.MachinesCount++;
                 return machine;

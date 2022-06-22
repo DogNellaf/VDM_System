@@ -1,50 +1,34 @@
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class InputComponent : ItemComponent
 {
     [SerializeField] private TMP_InputField IncreaseField;
     [SerializeField] private TMP_InputField LimitField;
-    [SerializeField] private Slider PrioritySlider;
-    [SerializeField] private TextMeshProUGUI PriorityLabel;
 
     public float Increase;
     public float Limit;
-    public float Priority;
 
     private float increaseUnsaved;
     private float limitUnsaved;
-    private float priorityUnsaved;
 
-    public override void Start()
-    {
-        priorityUnsaved = 50;
-        base.Start();
-    }
-
-    public override List<string> GetProperties()
-    {
-        return new List<string> { $"{Increase}", $"{Limit}", $"{Priority}" };
-    }
-
+    // Simulation
     public override void Simulate()
     {
         if (Value < Limit)
         {
             Value += Increase;
-            if (Value > Limit)
-            {
-                Value = Limit;
-            }
+        }
+        else
+        {
+            Value = Limit;
         }
         
-        foreach (var output in Outputs)
-        {
-            output.Simulate();
-        }
+        //foreach (var output in Outputs)
+        //{
+        //    output.Simulate();
+        //}
     }
 
     // Changing increase value
@@ -75,19 +59,11 @@ public class InputComponent : ItemComponent
         }
     }
 
-    // Changing priority
-    public void ChangePriority(float priority)
-    {
-        priorityUnsaved = Mathf.Round(priority);
-        PriorityLabel.text = $"{priorityUnsaved}%";
-    }
-
     // Save
     public override void Save()
     {
         Increase = increaseUnsaved;
         Limit = limitUnsaved;
-        Priority = priorityUnsaved;
         base.Save();
         UpdateFieldValues();
         DisactivaveUI();
@@ -98,17 +74,24 @@ public class InputComponent : ItemComponent
     {
         increaseUnsaved = Increase;
         limitUnsaved = Limit;
-        priorityUnsaved = Priority;
         base.Abort();
         UpdateFieldValues();
         DisactivaveUI();
     }
+
+    #region Utils
 
     // Change fields
     public void UpdateFieldValues()
     {
         IncreaseField.text = Increase.ToString();
         LimitField.text = Limit.ToString();
-        PrioritySlider.value = priorityUnsaved;
     }
+
+    public override List<string> GetProperties()
+    {
+        return new List<string> { $"{Increase}", $"{Limit}", $"{Priority}" };
+    }
+
+    #endregion
 }

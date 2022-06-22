@@ -48,4 +48,7 @@ public class WorkspaceModel : Element
 
     // Simulation speed
     public float SimulationSpeed = 1;
+
+    // Text prefab
+    public GameObject LinkTextFieldPrefab;
 }

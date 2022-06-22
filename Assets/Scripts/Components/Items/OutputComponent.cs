@@ -8,26 +8,35 @@ public class OutputComponent : ItemComponent
 {
     [SerializeField] private TMP_InputField CountField;
     [SerializeField] private TMP_InputField PriceField;
-    [SerializeField] private Slider PrioritySlider;
-    [SerializeField] private TextMeshProUGUI PriorityLabel;
 
     public float Count;
     public float Price;
-    public float Priority;
 
     private float countUnsaved;
     private float priceUnsaved;
-    private float priorityUnsaved;
 
-    public override void Start()
+    // Simulation
+    public override void Simulate()
     {
-        priorityUnsaved = 50;
-        base.Start();
-    }
-
-    public override List<string> GetProperties()
-    {
-        return new List<string> { $"{Count}", $"{Price}", $"{Priority}" };
+        Value = 0;
+        foreach (var input in Inputs)
+        {
+            var inputElement = input.gameObject.transform.Find("ConnectionOutput").gameObject;
+            var line = GetLine(inputElement, InputConnection);
+            if (Value + input.Value <= Count)
+            {
+                Value += input.Value * Price;
+                line.UpdateText(input.Value);
+                input.Value = 0;
+            }
+            else if (Value < Count)
+            {
+                var difference = Count - Value;
+                Value += difference * Price;
+                line.UpdateText(difference);
+                input.Value -= difference;
+            }
+        }
     }
 
     // Changing increase value
@@ -58,19 +67,11 @@ public class OutputComponent : ItemComponent
         }
     }
 
-    // Changing priority
-    public void ChangePriority(float priority)
-    {
-        priorityUnsaved = Mathf.Round(priority);
-        PriorityLabel.text = $"{priorityUnsaved}%";
-    }
-
     // Save
     public override void Save()
     {
         Count = countUnsaved;
         Price = priceUnsaved;
-        Priority = priorityUnsaved;
         base.Save();
         UpdateFieldValues();
         DisactivaveUI();
@@ -81,10 +82,18 @@ public class OutputComponent : ItemComponent
     {
         countUnsaved = Count;
         priceUnsaved = Price;
-        priorityUnsaved = Priority;
         base.Abort();
         UpdateFieldValues();
         DisactivaveUI();
+    }
+
+
+
+    #region utils
+
+    public override List<string> GetProperties()
+    {
+        return new List<string> { $"{Count}", $"{Price}", $"{Priority}" };
     }
 
     // Change fields
@@ -92,6 +101,7 @@ public class OutputComponent : ItemComponent
     {
         CountField.text = Count.ToString();
         PriceField.text = Price.ToString();
-        PrioritySlider.value = priorityUnsaved;
     }
+
+    #endregion
 }
