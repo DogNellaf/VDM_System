@@ -30,6 +30,23 @@ public class InputComponent : ItemComponent
         return new List<string> { $"{Increase}", $"{Limit}", $"{Priority}" };
     }
 
+    public override void Simulate()
+    {
+        if (Value < Limit)
+        {
+            Value += Increase;
+            if (Value > Limit)
+            {
+                Value = Limit;
+            }
+        }
+        
+        foreach (var output in Outputs)
+        {
+            output.Simulate();
+        }
+    }
+
     // Changing increase value
     public void ChangeIncrease(string increase)
     {

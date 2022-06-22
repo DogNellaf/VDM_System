@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -24,6 +25,23 @@ public class MachineComponent : ItemComponent
     public override List<string> GetProperties()
     {
         return new List<string> { $"{InputCount}", $"{OutputCount}", $"{MaxPower}", $"{SelfPower}" };
+    }
+
+    public override void Simulate()
+    {
+        var model = TwinApplication.GetModel<WorkspaceModel>();
+        var globalInputs = model.DigitalTwin.transform.GetComponentsInChildren<ItemComponent>();
+        var currentInputs = globalInputs.Where(x => x.Type == ItemType.Input && x.Outputs.Contains(this));
+        var performance = Worker.GetComponent<WorkerComponent>().Performance + SelfPower;
+        float value = 0;
+
+        foreach (var input in currentInputs)
+        {
+            if (value < MaxPower)
+            {
+                //input.Value * input.
+            }
+        }
     }
 
     // Changing input

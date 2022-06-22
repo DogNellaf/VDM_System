@@ -62,7 +62,7 @@ public class ItemComponent : Element
     // Digital Twin simulation
     public virtual void Simulate()
     {
-
+        throw new System.Exception("The method is not implemented");
     }
 
     // Add output in the list
