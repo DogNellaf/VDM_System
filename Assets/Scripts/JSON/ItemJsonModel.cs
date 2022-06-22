@@ -31,7 +31,7 @@ public class ItemJsonModel
             Type = component.Type;
             Properties = component.GetProperties();
             Connectons = new List<string>();
-            foreach (var connection in component.Inputs)
+            foreach (var connection in component.Outputs)
             {
                 Connectons.Add(connection.name);
             }

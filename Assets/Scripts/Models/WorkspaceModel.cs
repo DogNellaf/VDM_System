@@ -42,4 +42,10 @@ public class WorkspaceModel : Element
 
     // Current selected output connection
     public GameObject SelectedOutputConnection;
+
+    // Simulation state
+    public bool IsSimulationStarted = false;
+
+    // Simulation speed
+    public float SimulationSpeed = 1;
 }

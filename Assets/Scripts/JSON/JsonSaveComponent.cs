@@ -60,7 +60,7 @@ public sealed class JsonSaveComponent : Element
                 foreach (string connection in item.Connectons)
                 {
                     var connectonObject = objects.Single(x => x.name == connection);
-                    component.AddInput(connectonObject.GetComponent<ItemComponent>());
+                    connectonObject.GetComponent<ItemComponent>().AddOutput(component);
                 }
             }
         }

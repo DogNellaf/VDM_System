@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -93,7 +94,26 @@ public class WorkspaceView : Element
     // Run the digital twin
     public void Run()
     {
+        model.IsSimulationStarted = true;
+        StartCoroutine(Simulate());
+        Debug.Log("Digital Twin started");
+    }
 
+    // Every second function
+    public IEnumerator Simulate()
+    {
+        var items = model.DigitalTwin.transform.GetComponentsInChildren<ItemComponent>();
+        var outputs = items.Where(x => x is OutputComponent);
+        var inputs = items.Where(x => x is InputComponent);
+        var mahine = items.Where(x => x is MachineComponent);
+        while (model.IsSimulationStarted)
+        {
+            foreach (var input in inputs)
+            {
+                input.Simulate();
+            }
+            yield return new WaitForSeconds(model.SimulationSpeed);
+        }
     }
 
     // Timer
