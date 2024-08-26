@@ -1,6 +1,5 @@
 # Digital Twin Management System
 
-My graduation project for a bachelor's degree.
 This application to edit, save and calculate Digital Twins. Allows you to add new prefabs and connect them modularly to the system. Objects can be connected by weights, after which a step-by-step simulation of the work of the double takes place during the calculation.
 
 ## Stack
